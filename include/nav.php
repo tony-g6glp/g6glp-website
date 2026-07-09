@@ -1,0 +1,12 @@
+<nav class="admin-nav">
+    <a href="/g6glp/admin/">Dashboard</a>
+
+    <a href="/g6glp/admin/posts/">Posts</a>
+    <a href="/g6glp/admin/posts/new.php">New Post</a>
+
+    <a href="/g6glp/admin/categories/">Categories</a>
+    <a href="/g6glp/admin/tags/">Tags</a>
+
+    <a href="/g6glp/admin/logout.php">Logout</a>
+    <a href="/g6glp/blog/">View Blog</a>
+</nav>
