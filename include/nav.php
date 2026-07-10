@@ -11,4 +11,7 @@
 	<a href="/g6glp/admin/logout.php">Logout</a>
     
 	<a href="/g6glp/admin/change_password.php">Change Password</a>
+	<a href="/g6glp/admin/profile.php">
+Profile
+</a>
 </nav>
