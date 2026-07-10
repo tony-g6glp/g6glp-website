@@ -1,7 +1,29 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
-$id = $_GET['id'] ?? null;
+require_once __DIR__ . '/../../include/admin.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die('Invalid request');
+}
+
+verify_csrf();
+
+$id = (int)($_POST['id'] ?? 0);
+
+if ($id < 1) {
+    die('Invalid post');
+}
+
+$stmt = $pdo->prepare("
+    DELETE FROM blog_posts
+    WHERE id = ?
+");
+
+$stmt->execute([$id]);
+
+header("Location: index.php");
+exit;
 
 if (!$id) {
     redirect('/admin/posts/');
@@ -21,7 +43,8 @@ if (!$post) {
 // Handle delete only via POST
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+verify_csrf();
+	
 // Get image filename first
 
 $stmt->execute([$id]);
@@ -84,7 +107,9 @@ redirect('/admin/posts/');
 
 <h3><?= e($post['title']) ?></h3>
 
-<form method="post" onsubmit="return confirm('Delete this post?');">
+<form method="post" onSubmit="return confirm('Delete this post?');">
+
+	<?= csrf_field(); ?>
     <button type="submit" class="danger">
         Yes, Delete
     </button>

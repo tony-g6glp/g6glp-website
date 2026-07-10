@@ -5,7 +5,8 @@ require_once __DIR__ . '/../include/bootstrap.php';
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
+	verify_csrf();
+	
     $username = trim($_POST['user'] ?? '');
     $password = $_POST['pass'] ?? '';
 
@@ -76,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 <form method="post">
+<?= csrf_field(); ?>
 
 <p>User</p>
 

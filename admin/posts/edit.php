@@ -19,7 +19,8 @@ if (!$post) {
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+verify_csrf();
+	
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
     $status = $_POST['status'] ?? 'draft';

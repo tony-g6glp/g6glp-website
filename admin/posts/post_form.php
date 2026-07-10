@@ -1,5 +1,6 @@
 <form method="post" enctype="multipart/form-data">
 
+	<?= csrf_field(); ?>
     <p>Title</p>
 
     <input type="text"

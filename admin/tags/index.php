@@ -62,11 +62,26 @@ Edit
 
 |
 
-<a href="delete.php?id=<?= $tag['id'] ?>"
-onclick="return confirm('Delete tag?')">
-Delete
-</a>
+<form method="post"
+      action="delete.php"
+      style="display:inline;">
 
+<?= csrf_field(); ?>
+
+<input
+    type="hidden"
+    name="id"
+    value="<?= e($cat['id']) ?>"
+>
+
+<button
+    class="link-button"
+    type="submit"
+    onclick="return confirm('Delete category?')">
+    Delete
+</button>
+
+</form>
 </td>
 
 </tr>

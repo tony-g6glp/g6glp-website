@@ -1,4 +1,4 @@
-<?php
+z<?php
 require_once __DIR__ . '/../include/admin.php';
 
 // Counts
@@ -281,10 +281,23 @@ Edit
 
 |
 
-<a href="posts/delete.php?id=<?= $p['id'] ?>"
-onclick="return confirm('Delete post?')">
-Delete
-</a>
+<form method="post" action="posts/delete.php" style="display:inline;">
+
+<?= csrf_field(); ?>
+
+<input
+    type="hidden"
+    name="id"
+    value="<?= e($p['id']) ?>"
+>
+
+<button
+    type="submit"
+    onclick="return confirm('Delete post?')">
+    Delete
+</button>
+
+</form>
  </div>
 
 <?php endforeach; ?>

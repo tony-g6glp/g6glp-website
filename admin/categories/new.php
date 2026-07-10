@@ -4,7 +4,8 @@ require_once __DIR__ . '/../../include/admin.php';
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+	verify_csrf();
+	
     $name = trim($_POST['name'] ?? '');
 
     if ($name === '') {
@@ -58,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form method="post">
 
+	<?= csrf_field(); ?>
 <p>
 <label for="name">
 Category name
