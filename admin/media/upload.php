@@ -1,10 +1,113 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php
+
+require_once __DIR__ . '/../../include/admin.php';
+
+$message = "";
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    verify_csrf();
+
+    $image = upload_image(
+        $_FILES['image'] ?? null,
+        'posts',
+        $pdo
+    );
+
+
+    if ($image) {
+
+        $message = "Image uploaded successfully.";
+
+    } else {
+
+        $message = "Image upload failed.";
+
+    }
+
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
-<title>Untitled Document</title>
+
+<title>Upload Image</title>
+
+<link href="/g6glp/include/css.css" rel="stylesheet">
+
 </head>
 
+
 <body>
+
+
+<?php include __DIR__ . '/../../include/header.php'; ?>
+
+<?php include __DIR__ . '/../../include/nav.php'; ?>
+
+
+<div class="container">
+
+
+<div class="card">
+
+
+<h2>Upload Image</h2>
+
+
+<?php if ($message): ?>
+
+<p>
+<?= e($message) ?>
+</p>
+
+<?php endif; ?>
+
+
+<form method="post" enctype="multipart/form-data">
+
+
+<?= csrf_field(); ?>
+
+
+<p>
+Select image
+</p>
+
+
+<input
+    type="file"
+    name="image"
+    accept="image/*"
+    required
+>
+
+
+<br><br>
+
+
+<button type="submit">
+Upload
+</button>
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+<?php include __DIR__ . '/../../include/footer.php'; ?>
+
+
 </body>
+
 </html>
