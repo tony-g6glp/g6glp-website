@@ -12,8 +12,24 @@
 
 <a href="/g6glp/contact.php">Contact</a>
 
+
+<?php if (isset($_SESSION['user_id'])): ?>
+
 <span class="admin-link">
-    <a href="/g6glp/admin/login.php">Admin</a>
+    <a href="/g6glp/admin/">
+        Admin
+    </a>
 </span>
+
+<?php else: ?>
+
+<span class="admin-link">
+    <a href="/g6glp/admin/login.php">
+        Admin
+    </a>
+</span>
+
+<?php endif; ?>
+
 
 </nav>
