@@ -26,10 +26,5 @@ function require_login() {
     }
 }
 
-function require_role($role)
-{
-    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-        die('Access denied');
-    }
-}
+
 ?>
