@@ -106,7 +106,30 @@ switch ($mime) {
     default:
         return null;
 }
+// Fix phone camera orientation
+if ($mime === 'image/jpeg' && function_exists('exif_read_data')) {
 
+    $exif = exif_read_data($file['tmp_name']);
+
+    if (!empty($exif['Orientation'])) {
+
+        switch ($exif['Orientation']) {
+
+            case 3:
+                $source = imagerotate($source, 180, 0);
+                break;
+
+            case 6:
+                $source = imagerotate($source, -90, 0);
+                break;
+
+            case 8:
+                $source = imagerotate($source, 90, 0);
+                break;
+
+        }
+    }
+}
 
 // Create resized image
 $image = imagecreatetruecolor(
