@@ -30,6 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
+		
+		$stmt = $pdo->prepare("
+		UPDATE admin_users
+		SET last_login = NOW()
+		WHERE id = ?
+		");
+	
+		$stmt->execute([$_SESSION['user_id']]);
 
         header("Location: index.php");
         exit;
