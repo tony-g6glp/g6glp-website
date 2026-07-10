@@ -75,10 +75,23 @@ $posts = $pdo->query("
         <a href="unpublish.php?id=<?= $p['id'] ?>">Unpublish</a> |
     <?php endif; ?>
 
-    	<a href="delete.php?id=<?= $p['id'] ?>"
-				onclick="return confirm('Delete post?')">
-				Delete
-				</a>
+    	<form method="post" action="delete.php" style="display:inline;">
+
+<?= csrf_field(); ?>
+
+<input
+    type="hidden"
+    name="id"
+    value="<?= e($p['id']) ?>"
+>
+
+<button
+    type="submit"
+    onclick="return confirm('Delete post?')">
+    Delete
+</button>
+
+</form>
             </td>
         </tr>
     <?php endforeach; ?>

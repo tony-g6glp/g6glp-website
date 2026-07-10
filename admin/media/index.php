@@ -37,14 +37,32 @@ $media = $stmt->fetchAll();
 
 
 <div class="container">
+<?php if (!empty($_SESSION['message'])): ?>
 
+<p class="error">
+<?= e($_SESSION['message']) ?>
+</p>
+
+<?php unset($_SESSION['message']); ?>
+
+<?php endif; ?>
 <h2>Media Library</h2>
 
-<p>
+<div class="card">
+
+<a href="index.php">
+Media Library
+</a>
+
+|
+
 <a href="upload.php">
 Upload Image
 </a>
-</p>
+
+</div>
+
+<br>
 
 
 <div class="cards">
@@ -84,7 +102,23 @@ Size:
 <?= e(number_format($item['file_size'] / 1024, 1)) ?> KB
 </p>
 
+<form method="post" action="delete.php">
 
+<?= csrf_field(); ?>
+
+<input
+    type="hidden"
+    name="id"
+    value="<?= e($item['id']) ?>"
+>
+
+<button
+    type="submit"
+    onclick="return confirm('Delete this image?')">
+    Delete
+</button>
+
+</form>
 </div>
 
 

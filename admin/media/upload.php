@@ -58,8 +58,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <h2>Upload Image</h2>
+<p>
 
+<a href="index.php">
+Media Library
+</a>
 
+|
+
+<a href="upload.php">
+Upload Image
+</a>
+
+</p>
 <?php if ($message): ?>
 
 <p>
