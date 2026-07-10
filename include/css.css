@@ -238,3 +238,37 @@ button{
 .link-button:hover {
     color: #004499;
 }
+
+.user-info {
+    text-align: right;
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+
+.header-left h1 {
+    margin: 0;
+}
+
+
+.header-left p {
+    margin: 5px 0 0;
+}
+
+
+.header-user {
+    text-align: right;
+    font-size: 1em;
+}
+
+
+.header-user strong {
+    font-size: 1.2em;
+}
