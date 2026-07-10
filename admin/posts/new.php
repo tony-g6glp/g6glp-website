@@ -21,7 +21,11 @@ verify_csrf();
         $slug = create_slug($title);
 		
 		// upload image
-		$featured_image = upload_image($_FILES['featured_image'] ?? null);
+		$featured_image = upload_image(
+			$_FILES['featured_image'] ?? null,
+			'posts',
+			$pdo
+		);
 		
 		// INSERT
         $stmt = $pdo->prepare("

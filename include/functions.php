@@ -36,7 +36,7 @@ function e($value)
 
 
 
-function upload_image($file, $folder = 'posts')
+function upload_image($file, $folder = 'posts', $pdo = null)
 {
     if (
         !isset($file) ||
@@ -154,6 +154,31 @@ create_thumbnail(
     400
 );
 
+// Save media record
+
+if ($pdo) {
+
+    $stmt = $pdo->prepare("
+        INSERT INTO media
+        (
+            filename,
+            original_name,
+            uploaded_by,
+            mime_type,
+            file_size
+        )
+        VALUES (?, ?, ?, ?, ?)
+    ");
+
+    $stmt->execute([
+        $filename,
+        $file['name'],
+        $_SESSION['user_id'] ?? null,
+        $mime,
+        $file['size']
+    ]);
+
+}
 
 return $filename;
 }
