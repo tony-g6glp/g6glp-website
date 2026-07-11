@@ -53,6 +53,9 @@ verify_csrf();
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
     $status = $_POST['status'] ?? 'draft';
+	if (!can('publish_posts')) {
+    $status = 'draft';
+}
     $category_id = !empty($_POST['category_id'])
 		? $_POST['category_id']
 		: null;

@@ -40,17 +40,21 @@
 
     <select name="status">
 
-        <option value="draft"
-        <?= (($post['status'] ?? '') == 'draft') ? 'selected' : '' ?>>
-            Draft
-        </option>
+    <option value="draft"
+    <?= (($post['status'] ?? '') == 'draft') ? 'selected' : '' ?>>
+        Draft
+    </option>
 
-        <option value="published"
-        <?= (($post['status'] ?? '') == 'published') ? 'selected' : '' ?>>
-            Published
-        </option>
+    <?php if (can('publish_posts')): ?>
 
-    </select>
+    <option value="published"
+    <?= (($post['status'] ?? '') == 'published') ? 'selected' : '' ?>>
+        Published
+    </option>
+
+    <?php endif; ?>
+
+</select>
 <p>Category</p>
 
 <select name="category_id">

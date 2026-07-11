@@ -105,42 +105,53 @@ if (can('edit_posts')) {
 			</td>
             
 			<td>
-                <?php if (can_edit_post($post)):if (
-					can('edit_posts') ||
-					(
-						can('edit_own_posts') &&
-						$p['created_by'] == $_SESSION['user_id']
-					)): ?>
-				
-				<a href="edit.php?id=<?= $p['id'] ?>">
+                <?php if (can_edit_post($p)): ?>
+
+				<a href="edit.php?id=<?= e($p['id']) ?>">
 					Edit
 				</a>
 				
-				<?php endif; ?>  |
+				<?php endif; ?>  
 
-    <?php if ($p['status'] == 'draft'): ?>
-        <a href="publish.php?id=<?= $p['id'] ?>">Publish</a> |
-    <?php else: ?>
-        <a href="unpublish.php?id=<?= $p['id'] ?>">Unpublish</a> |
-    <?php endif; ?>
+    <?php if (can('publish_posts')): ?>
 
-    	<form method="post" action="delete.php" style="display:inline;">
+		<?php if ($p['status'] == 'draft'): ?>
+		
+		| <a href="publish.php?id=<?= e($p['id']) ?>">
+			Publish
+		</a>
+		
+		<?php else: ?>
+		
+		| <a href="unpublish.php?id=<?= e($p['id']) ?>">
+			Unpublish
+		</a>
+		
+		<?php endif; ?>
+		
+		<?php endif; ?>
 
-<?= csrf_field(); ?>
+    	<?php if (can_delete_post($p)): ?>
 
-<input
-    type="hidden"
-    name="id"
-    value="<?= e($p['id']) ?>"
->
-
-<button
-    type="submit"
-    onclick="return confirm('Delete post?')">
-    Delete
-</button>
-
-</form>
+	| <form method="post" action="delete.php" style="display:inline;">
+	
+		<?= csrf_field(); ?>
+		
+		<input
+			type="hidden"
+			name="id"
+			value="<?= e($p['id']) ?>"
+		>
+		
+		<button
+			type="submit"
+			onclick="return confirm('Delete post?')">
+			Delete
+		</button>
+	
+	</form>
+	
+	<?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
