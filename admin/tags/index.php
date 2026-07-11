@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('manage_tags');
+
 $tags = $pdo->query("
     SELECT id, name, slug
     FROM tags

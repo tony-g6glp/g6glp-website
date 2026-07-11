@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('manage_media');
+
 $message = "";
 
 

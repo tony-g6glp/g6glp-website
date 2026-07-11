@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('create_posts');
+
 $message = "";
 
 // Handle form submission
@@ -29,20 +31,21 @@ verify_csrf();
 		
 		// INSERT
         $stmt = $pdo->prepare("
-            INSERT INTO blog_posts 
-			(title, slug, content, status, category_id, featured_image, created_at)
-			VALUES (?, ?, ?, ?, ?, ?, NOW())
-        ");
+            INSERT INTO blog_posts
+				(title, slug, content, status, category_id, featured_image, created_by, created_at)
+				VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
+        		");
 		$category_id = !empty($_POST['category_id'])
 			? $_POST['category_id']
 			: null;
 		$stmt->execute([
-		$title,
-		$slug,
-		$content,
-		$status,
-		$category_id,
-		$featured_image
+			$title,
+			$slug,
+			$content,
+			$status,
+			$category_id,
+			$featured_image,
+			$_SESSION['user_id']
 	]);
 $post_id = $pdo->lastInsertId();
 

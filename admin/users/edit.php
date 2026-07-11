@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
-require_role('admin');
+require_permission('manage_users');;
 
 
 $id = (int)($_GET['id'] ?? 0);

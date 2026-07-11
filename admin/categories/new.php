@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('manage_categories');
+
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

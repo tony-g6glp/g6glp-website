@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('manage_categories');
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request');
 }

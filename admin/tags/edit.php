@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
+require_permission('manage_tags');
+
 $id = $_GET['id'] ?? null;
 
 if (!$id) {

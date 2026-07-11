@@ -1,17 +1,55 @@
 <?php
 require_once __DIR__ . '/../../include/admin.php';
 
-$posts = $pdo->query("
-    SELECT 
-        blog_posts.*,
-        categories.name AS category_name
-    FROM blog_posts
-    LEFT JOIN categories
-    ON blog_posts.category_id = categories.id
-    ORDER BY blog_posts.created_at DESC
-")->fetchAll();
-?>
+if (
+    !can('edit_posts') &&
+    !can('edit_own_posts')
+) {
 
+    http_response_code(403);
+    die('Access denied');
+
+}
+
+if (can('edit_posts')) {
+
+    // Admin and Editor see all posts
+
+    $posts = $pdo->query("
+        SELECT 
+            blog_posts.*,
+            categories.name AS category_name
+        FROM blog_posts
+        LEFT JOIN categories
+        ON blog_posts.category_id = categories.id
+        ORDER BY blog_posts.created_at DESC
+    ")->fetchAll();
+
+
+} else {
+
+    // Authors only see their own posts
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            blog_posts.*,
+            categories.name AS category_name
+        FROM blog_posts
+        LEFT JOIN categories
+        ON blog_posts.category_id = categories.id
+        WHERE blog_posts.created_by = ?
+        ORDER BY blog_posts.created_at DESC
+    ");
+
+    $stmt->execute([
+        $_SESSION['user_id']
+    ]);
+
+    $posts = $stmt->fetchAll();
+
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +105,18 @@ $posts = $pdo->query("
 			</td>
             
 			<td>
-                <a href="edit.php?id=<?= $p['id'] ?>">Edit</a> |
+                <?php if (
+					can('edit_posts') ||
+					(
+						can('edit_own_posts') &&
+						$p['created_by'] == $_SESSION['user_id']
+					)): ?>
+				
+				<a href="edit.php?id=<?= $p['id'] ?>">
+					Edit
+				</a>
+				
+				<?php endif; ?>  |
 
     <?php if ($p['status'] == 'draft'): ?>
         <a href="publish.php?id=<?= $p['id'] ?>">Publish</a> |

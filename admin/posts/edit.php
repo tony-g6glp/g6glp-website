@@ -1,5 +1,23 @@
 <?php
+
 require_once __DIR__ . '/../../include/admin.php';
+
+
+// Check permission to enter edit page
+
+if (
+    !can('edit_posts') &&
+    !can('edit_own_posts')
+) {
+
+    http_response_code(403);
+    die('Access denied');
+
+}
+
+
+// Existing edit.php code continues below
+
 
 $id = $_GET['id'] ?? null;
 
@@ -14,6 +32,17 @@ $post = $stmt->fetch();
 
 if (!$post) {
     redirect('/admin/posts/');
+}
+
+if (
+    can('edit_own_posts') &&
+    !can('edit_posts') &&
+    $post['created_by'] != $_SESSION['user_id']
+) {
+
+    http_response_code(403);
+    die('You can only edit your own posts.');
+
 }
 
 $message = "";

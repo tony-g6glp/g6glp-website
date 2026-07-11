@@ -1,7 +1,7 @@
 <?php
 
 // =================================
-// Role Permissions
+// Role permissions
 // =================================
 
 function permissions()
@@ -11,19 +11,30 @@ function permissions()
         'admin' => [
 
             'manage_users',
-            'manage_posts',
-            'manage_media',
+
+            'create_posts',
+            'edit_posts',
+            'delete_posts',
+            'publish_posts',
+
+            'create_media',
+            'delete_media',
+
             'manage_categories',
-            'manage_settings'
+            'manage_tags'
 
         ],
 
 
         'editor' => [
 
-            'manage_posts',
-            'manage_media',
-            'manage_categories'
+            'create_posts',
+            'edit_posts',
+            'delete_posts',
+            'publish_posts',
+
+            'create_media',
+            'delete_media'
 
         ],
 
@@ -39,79 +50,44 @@ function permissions()
 }
 
 
-
 // =================================
-// Check Permission
+// Check permission
 // =================================
 
 function can($permission)
 {
-
     if (!isset($_SESSION['role'])) {
-
         return false;
-
     }
 
 
     $role = $_SESSION['role'];
 
+    $all = permissions();
 
-    $permissions = permissions();
+
+    if (!isset($all[$role])) {
+        return false;
+    }
 
 
     return in_array(
         $permission,
-        $permissions[$role] ?? []
+        $all[$role]
     );
-
 }
 
 
-
 // =================================
-// Require Permission
+// Require permission
 // =================================
 
 function require_permission($permission)
 {
-
     if (!can($permission)) {
 
         http_response_code(403);
-
         die('Access denied');
 
     }
-
-}
-
-
-
-// =================================
-// Existing Role Helpers
-// =================================
-
-function require_role($role)
-{
-    if (
-        !isset($_SESSION['role']) ||
-        $_SESSION['role'] !== $role
-    ) {
-
-        http_response_code(403);
-
-        die('Access denied');
-
-    }
-}
-
-
-
-function has_role($role)
-{
-    return (
-        isset($_SESSION['role']) &&
-        $_SESSION['role'] === $role
-    );
 }

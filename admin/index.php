@@ -1,7 +1,11 @@
-z<?php
+<?php
+
 require_once __DIR__ . '/../include/admin.php';
 
-// Counts
+
+// -------------------------
+// Dashboard Counts
+// -------------------------
 
 $total_posts = $pdo->query("
     SELECT COUNT(*)
@@ -16,12 +20,43 @@ $published_posts = $pdo->query("
 ")->fetchColumn();
 
 
-$draft_posts = $pdo->query("
-    SELECT COUNT(*)
-    FROM blog_posts
-    WHERE status = 'draft'
-")->fetchColumn();
+// -------------------------
+// Draft Posts
+// -------------------------
 
+if (can('edit_posts')) {
+
+    $draft_posts = $pdo->query("
+        SELECT id, title, created_at, created_by
+        FROM blog_posts
+        WHERE status = 'draft'
+        ORDER BY created_at DESC
+        LIMIT 5
+    ")->fetchAll();
+
+} else {
+
+    $stmt = $pdo->prepare("
+        SELECT id, title, created_at, created_by
+        FROM blog_posts
+        WHERE status = 'draft'
+        AND created_by = ?
+        ORDER BY created_at DESC
+        LIMIT 5
+    ");
+
+    $stmt->execute([
+        $_SESSION['user_id']
+    ]);
+
+    $draft_posts = $stmt->fetchAll();
+
+}
+
+
+// -------------------------
+// Other Counts
+// -------------------------
 
 $total_categories = $pdo->query("
     SELECT COUNT(*)
@@ -34,27 +69,37 @@ $total_tags = $pdo->query("
     FROM tags
 ")->fetchColumn();
 
-$posts = $pdo->query("
-    SELECT id, title, status
-    FROM blog_posts
-    ORDER BY created_at DESC
-    LIMIT 4
-")->fetchAll();
 
-$latest_posts = $pdo->query("
-    SELECT id, title, status, created_at
-    FROM blog_posts
-    ORDER BY created_at DESC
-    LIMIT 4
-")->fetchAll();
+// -------------------------
+// Latest Posts
+// -------------------------
 
-$draft_list = $pdo->query("
-    SELECT id, title, created_at
-    FROM blog_posts
-    WHERE status = 'draft'
-    ORDER BY created_at DESC
-    LIMIT 5
-")->fetchAll();
+if (can('edit_posts')) {
+
+    $latest_posts = $pdo->query("
+        SELECT id, title, status, created_at, created_by
+        FROM blog_posts
+        ORDER BY created_at DESC
+        LIMIT 4
+    ")->fetchAll();
+
+} else {
+
+    $stmt = $pdo->prepare("
+        SELECT id, title, status, created_at, created_by
+        FROM blog_posts
+        WHERE created_by = ?
+        ORDER BY created_at DESC
+        LIMIT 4
+    ");
+
+    $stmt->execute([
+        $_SESSION['user_id']
+    ]);
+
+    $latest_posts = $stmt->fetchAll();
+
+}
 
 ?>
 
@@ -84,7 +129,7 @@ $draft_list = $pdo->query("
 
 <p>Published: <?= e($published_posts) ?></p>
 
-<p>Drafts: <?= e($draft_posts) ?></p>
+<p>Drafts: <?= count($draft_posts) ?></p>
 
 </div>
 
@@ -188,9 +233,23 @@ Manage Tags
         <tr>
 
         <td>
-        <a href="posts/edit.php?id=<?= $post['id'] ?>">
-        <?= e($post['title']) ?>
-        </a>
+        <?php if (
+			    can('edit_posts') ||
+				(
+					can('edit_own_posts') &&
+					$post['created_by'] == $_SESSION['user_id']
+				)
+			): ?>
+
+			<a href="posts/edit.php?id=<?= $post['id'] ?>">
+			<?= e($post['title']) ?>
+			</a>
+			
+			<?php else: ?>
+			
+			<?= e($post['title']) ?>
+			
+			<?php endif; ?>
         </td>
 
         <td>
@@ -214,7 +273,7 @@ Manage Tags
 		<h2>Drafts Needing Attention</h2>
         
 
-        <?php if (empty($draft_list)): ?>
+        <?php if (empty($draft_posts)): ?>
 
         <p>
         No drafts waiting.
@@ -231,7 +290,7 @@ Manage Tags
         </tr>
 
 
-        <?php foreach ($draft_list as $draft): ?>
+        <?php foreach ($draft_posts as $draft): ?>
 
         <tr>
 
@@ -267,7 +326,7 @@ Manage Tags
 <h2>Recent Posts</h2>
 <div class="cards">
 
-<?php foreach ($posts as $p): ?>
+<?php foreach ($latest_posts as $p): ?>
 
 <div class="card">
 
@@ -275,11 +334,22 @@ Manage Tags
 
 <p>Status: <?= e($p['status']) ?></p>
 
+	<?php if (
+		can('edit_posts') ||
+		(
+			can('edit_own_posts') &&
+			$p['created_by'] == $_SESSION['user_id']
+		)
+	): ?>
+
 <a href="posts/edit.php?id=<?= $p['id'] ?>">
 Edit
 </a>
 
-|
+<?php endif; ?>
+
+
+<?php if (can('delete_posts')): ?>
 
 <form method="post" action="posts/delete.php" style="display:inline;">
 
@@ -298,6 +368,8 @@ Edit
 </button>
 
 </form>
+
+<?php endif; ?>
  </div>
 
 <?php endforeach; ?>
