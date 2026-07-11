@@ -105,7 +105,7 @@ if (can('edit_posts')) {
 			</td>
             
 			<td>
-                <?php if (
+                <?php if (can_edit_post($post)):if (
 					can('edit_posts') ||
 					(
 						can('edit_own_posts') &&

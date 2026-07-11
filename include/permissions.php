@@ -4,6 +4,7 @@
 // Role permissions
 // =================================
 
+
 function permissions()
 {
     return [
@@ -90,4 +91,34 @@ function require_permission($permission)
         die('Access denied');
 
     }
+}
+
+function can_edit_post($post): bool
+{
+    // Admin/editor can edit all posts
+    if (can('edit_posts')) {
+        return true;
+    }
+
+    // Author can edit only their own posts
+    if (
+        can('edit_own_posts') &&
+        $post['created_by'] == $_SESSION['user_id']
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+
+function can_delete_post($post): bool
+{
+    // Only users with delete_posts permission
+    // can delete posts
+    if (can('delete_posts')) {
+        return true;
+    }
+
+    return false;
 }

@@ -233,13 +233,7 @@ Manage Tags
         <tr>
 
         <td>
-        <?php if (
-			    can('edit_posts') ||
-				(
-					can('edit_own_posts') &&
-					$post['created_by'] == $_SESSION['user_id']
-				)
-			): ?>
+        <?php if (can_edit_post($post)): ?>
 
 			<a href="posts/edit.php?id=<?= $post['id'] ?>">
 			<?= e($post['title']) ?>
@@ -349,7 +343,7 @@ Edit
 <?php endif; ?>
 
 
-<?php if (can('delete_posts')): ?>
+<?php if (can_delete_post($post)): ?>
 
 <form method="post" action="posts/delete.php" style="display:inline;">
 
