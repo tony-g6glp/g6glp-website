@@ -2,8 +2,16 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
-require_permission('manage_media');
 
+if (
+    !can('create_media') &&
+    !can('delete_media')
+) {
+
+    http_response_code(403);
+    die('Access denied');
+
+}
 
 $stmt = $pdo->query("
     SELECT 
@@ -58,9 +66,13 @@ Media Library
 
 |
 
+<?php if (can('create_media')): ?>
+
 <a href="upload.php">
 Upload Image
 </a>
+
+<?php endif; ?>
 
 </div>
 
@@ -114,11 +126,27 @@ Size:
     value="<?= e($item['id']) ?>"
 >
 
+<?php if (can('delete_media')): ?>
+
+<form method="post" action="delete.php">
+
+<?= csrf_field(); ?>
+
+<input
+    type="hidden"
+    name="id"
+    value="<?= e($item['id']) ?>"
+>
+
 <button
     type="submit"
     onclick="return confirm('Delete this image?')">
     Delete
 </button>
+
+</form>
+
+<?php endif; ?>
 
 </form>
 </div>

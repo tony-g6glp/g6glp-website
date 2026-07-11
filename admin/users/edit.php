@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
-require_permission('manage_users');;
+require_permission('manage_users');
 
 
 $id = (int)($_GET['id'] ?? 0);
@@ -40,7 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $username = trim($_POST['username'] ?? '');
-    $email = trim($_POST['email'] ?? '');
+   if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    $message = "Invalid email address.";
+
+}
     $role = $_POST['role'] ?? 'author';
     $active = isset($_POST['active']) ? 1 : 0;
 

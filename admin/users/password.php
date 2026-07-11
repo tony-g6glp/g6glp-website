@@ -41,16 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm = $_POST['confirm'] ?? '';
 
 
-    if ($password === '') {
-
-        $message = "Password is required.";
-
-    } elseif ($password !== $confirm) {
-
-        $message = "Passwords do not match.";
-
-    } else {
-
+    if ($password === '') {	
+			$message = "Password is required.";
+			
+	} elseif (
+				strlen($password) < 8) {
+			
+			$message = "Password must be at least 8 characters.";
+			
+	} elseif ($password !== $confirm) {
+			
+			$message = "Passwords do not match.";
+			
+	} else {
 
         $hash = password_hash(
             $password,

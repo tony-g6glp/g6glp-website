@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../include/admin.php';
 
-require_permission('manage_media');
+require_permission('delete_media');
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

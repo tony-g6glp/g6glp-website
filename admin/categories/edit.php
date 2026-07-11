@@ -6,7 +6,7 @@ require_permission('manage_categories');
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
-    redirect('/admin/categories/list.php');
+    redirect('/admin/categories/index.php');
 }
 
 // Load category
@@ -22,7 +22,7 @@ $stmt->execute([$id]);
 $category = $stmt->fetch();
 
 if (!$category) {
-    redirect('/admin/categories/list.php');
+    redirect('/admin/categories/index.php');
 }
 
 $message = "";

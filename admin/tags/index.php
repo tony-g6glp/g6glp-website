@@ -73,13 +73,13 @@ Edit
 <input
     type="hidden"
     name="id"
-    value="<?= e($cat['id']) ?>"
+    value="<?= e($tags['id']) ?>"
 >
 
 <button
     class="link-button"
     type="submit"
-    onclick="return confirm('Delete category?')">
+    onclick="return confirm('Delete tag?')">
     Delete
 </button>
 

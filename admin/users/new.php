@@ -20,9 +20,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $active = isset($_POST['active']) ? 1 : 0;
 
 
-    if ($username === '' || $password === '') {
+    $allowed_roles = [
+        'admin',
+        'editor',
+        'author'
+    ];
 
-        $message = "Username and password are required.";
+
+    if (!in_array($role, $allowed_roles, true)) {
+
+        $message = "Invalid role selected.";
+
+    }
+
+
+   if ($username === '' || $password === '') {
+
+$message = "Username and password are required.";
+
+} elseif (strlen($password) < 8) {
+
+$message = "Password must be at least 8 characters.";
+
+} else {
+
+
+
+
+
+    // Check duplicate username
+
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*)
+        FROM admin_users
+        WHERE username = ?
+    ");
+
+    $stmt->execute([
+        $username
+    ]);
+
+
+    if ($stmt->fetchColumn() > 0) {
+
+        $message = "Username already exists.";
 
     } else {
 
@@ -30,32 +71,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hash = password_hash(
             $password,
             PASSWORD_DEFAULT
-        );
+    );
 
 
-        $stmt = $pdo->prepare("
-            INSERT INTO admin_users
-            (
-                username,
-                password_hash,
-                email,
-                role,
-                active
-            )
+	$stmt = $pdo->prepare("
+		INSERT INTO admin_users
+		(
+			username,
+			password_hash,
+			email,
+			role,
+			active
+		)
             VALUES (?, ?, ?, ?, ?)
-        ");
+     ");
 
 
-        $stmt->execute([
-            $username,
-            $hash,
-            $email,
-            $role,
-            $active
-        ]);
+	$stmt->execute([
+		$username,
+		$hash,
+		$email,
+		$role,
+		$active
+	]);
 
 
-        redirect('/admin/users/');
+    redirect('/admin/users/');
+    }
+
+
+	$stmt = $pdo->prepare("
+		INSERT INTO admin_users
+		(
+			username,
+			password_hash,
+			email,
+			role,
+			active
+		)
+	VALUES (?, ?, ?, ?, ?)
+	");
+
+
+	$stmt->execute([
+		$username,
+		$hash,
+		$email,
+		$role,
+		$active
+	]);
+
+
+     redirect('/admin/users/');
 
     }
 

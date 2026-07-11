@@ -12,11 +12,19 @@ verify_csrf();
     $new = $_POST['new_password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
 
-    if ($new !== $confirm) {
+   if ($new === '') {
 
-        $error = "New passwords do not match";
-
-    } else {
+		$error = "New password is required.";
+	
+	} elseif (strlen($new) < 8) {
+	
+		$error = "Password must be at least 8 characters.";
+	
+	} elseif ($new !== $confirm) {
+	
+		$error = "New passwords do not match.";
+	
+	} else {
 
         $stmt = $pdo->prepare("
             SELECT password_hash
