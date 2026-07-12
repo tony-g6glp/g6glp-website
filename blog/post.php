@@ -16,6 +16,7 @@ $stmt = $pdo->prepare("
     LEFT JOIN categories
     ON blog_posts.category_id = categories.id
     WHERE blog_posts.slug = ?
+	AND blog_posts.status = 'published'
     LIMIT 1
 ");
 
@@ -24,7 +25,8 @@ $stmt->execute([$slug]);
 $post = $stmt->fetch();
 
 if (!$post) {
-    die("Post not found");
+    http_response_code(404);
+    die('Post not found');
 }
 
 $tag_stmt = $pdo->prepare("
@@ -59,11 +61,8 @@ $post_tags = $tag_stmt->fetchAll();
 
 <body>
 
-<header>
-<header class="post-header">
-
-
 <?php include __DIR__ . '/../include/public-header.php'; ?>
+
 <?php include __DIR__ . '/../include/public-nav.php'; ?>
 
 <div class="container">

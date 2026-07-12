@@ -272,3 +272,16 @@ button{
 .header-user strong {
     font-size: 1.2em;
 }
+
+.blog-layout {
+    display: flex;
+    gap: 30px;
+}
+
+.blog-sidebar {
+    width: 250px;
+}
+
+.blog-content {
+    flex: 1;
+}

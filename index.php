@@ -96,6 +96,15 @@ construction notes and useful utilities.
 <a href="downloads/">Visit</a>
 </div>
 
+<div class="card">
+<h3>Tars Robot</h3>
+<p>
+Input your logs to check against the TARS Awards Scheme.
+</p>
+
+<a href="/TARS_ROBOT/">Visit</a>
+</div>
+
 </div>
 
 </section>

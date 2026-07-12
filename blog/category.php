@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../include/bootstrap.php';
 
 $slug = $_GET['slug'] ?? '';
+
 $cat = $pdo->prepare("
     SELECT name
     FROM categories
@@ -13,7 +14,9 @@ $cat->execute([$slug]);
 $category = $cat->fetch();
 
 if (!$category) {
-    die("Category not found");
+    http_response_code(404);
+    require __DIR__ . '/../404.php';
+    exit;
 }
 
 $stmt = $pdo->prepare("
@@ -57,53 +60,34 @@ $posts = $stmt->fetchAll();
 
 <div class="container">
 
+<div class="blog-layout">
+
+<aside class="blog-sidebar">
+
+<?php include __DIR__ . '/../include/blog-sidebar.php'; ?>
+
+</aside>
+
+
+<main class="blog-content">
+
+
+
 <h1><?= e($category['name'] ?? 'Category') ?></h1>
 
 
 <?php foreach ($posts as $post): ?>
-
-<div class="card">
-
-<h2>
-<?= e($post['title']) ?>
-</h2>
-
-<?php if (!empty($post['featured_image'])): ?>
-
-<?php
-$thumb = pathinfo(
-    $post['featured_image'],
-    PATHINFO_FILENAME
-) . '_thumb.jpg';
-?>
-
-<img
-src="/g6glp/uploads/posts/thumbs/<?= e($thumb) ?>"
-alt="<?= e($post['title']) ?>"
-class="post-thumb"
->
-
-<?php endif; ?>
-<p>
-<?= nl2br(e(substr($post['content'],0,250))) ?>
-
-<?php if (strlen($post['content']) > 250): ?>
-...
-</p>
-
-
-<a href="post.php?slug=<?= urlencode($post['slug']) ?>">
-Read more
-</a>
-<?php endif; ?>
-
-</div>
-
+<?php include __DIR__ . '/../include/blog-post-card.php'; ?>
 <?php endforeach; ?>
 
 
 </div>
 
+</main>
+
+</div>
+
+</div>
 
 <?php include __DIR__ . '/../include/footer.php'; ?>
 

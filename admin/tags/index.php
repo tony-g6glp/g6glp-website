@@ -73,7 +73,7 @@ Edit
 <input
     type="hidden"
     name="id"
-    value="<?= e($tags['id']) ?>"
+    value="<?= e($tag['id']) ?>"
 >
 
 <button

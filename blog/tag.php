@@ -15,7 +15,9 @@ $stmt->execute([$slug]);
 $tag = $stmt->fetch();
 
 if (!$tag) {
-    die("Tag not found");
+    http_response_code(404);
+    require __DIR__ . '/../404.php';
+    exit;
 }
 
 
@@ -63,6 +65,18 @@ Tag: <?= e($tag['name']) ?>
 
 <div class="container">
 
+<div class="blog-layout">
+
+<aside class="blog-sidebar">
+
+<?php include __DIR__ . '/../include/blog-sidebar.php'; ?>
+
+</aside>
+
+
+<main class="blog-content">
+
+
 <h2>
 Tag: <?= e($tag['name']) ?>
 </h2>
@@ -73,24 +87,15 @@ Tag: <?= e($tag['name']) ?>
 <?php else: ?>
 
 <?php foreach ($posts as $post): ?>
-
-<div class="card">
-
-<h3>
-<a href="post.php?slug=<?= urlencode($post['slug']) ?>">
-<?= e($post['title']) ?>
-</a>
-</h3>
-
-<p>
-<?= e($post['created_at']) ?>
-</p>
-
-</div>
-
+<?php include __DIR__ . '/../include/blog-post-card.php'; ?>
 <?php endforeach; ?>
 
 <?php endif; ?>
+
+</div>
+</main>
+
+</div>
 
 </div>
 
