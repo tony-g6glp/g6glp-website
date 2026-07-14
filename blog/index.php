@@ -10,6 +10,7 @@ $posts = $pdo->query("
     LEFT JOIN categories
     ON blog_posts.category_id = categories.id
     WHERE blog_posts.status='published'
+	and archived = 0;
     ORDER BY blog_posts.created_at DESC
 ")->fetchAll();
 ?>

@@ -93,11 +93,14 @@ if (can('edit_posts')) {
 			</td>
 			
 			<td>
+			<?php if ($p['archived']): ?>
+    			<span class="badge archived">Archived</span>
+			<?php else: ?>
 			<?php if ($p['status'] == 'published'): ?>
 				<span class="published">Published</span>
 			<?php else: ?>
 				<span class="draft">Draft</span>
-			<?php endif; ?>
+			<?php endif; ?><?php endif; ?>
 			</td>
 			
 			<td>
@@ -105,6 +108,7 @@ if (can('edit_posts')) {
 			</td>
             
 			<td>
+			
                 <?php if (can_edit_post($p)): ?>
 
 				<a href="edit.php?id=<?= e($p['id']) ?>">

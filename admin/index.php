@@ -127,6 +127,7 @@ if (can('edit_posts')) {
 
 <p>Total: <?= e($total_posts) ?></p>
 
+
 <p>Published: <?= e($published_posts) ?></p>
 
 <p>Drafts: <?= count($draft_posts) ?></p>

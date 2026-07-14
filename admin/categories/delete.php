@@ -18,12 +18,9 @@ if ($id < 1) {
 $stmt = $pdo->prepare("
     DELETE FROM blog_posts
     WHERE id = ?
-");
+"); 
 
 $stmt->execute([$id]);
-
-header("Location: index.php");
-exit;
 
 if (!$id) {
     redirect('/admin/categories/list.php');
@@ -40,7 +37,6 @@ $stmt = $pdo->prepare("
 $stmt->execute([$id]);
 
 $count = $stmt->fetchColumn();
-
 
 if ($count > 0) {
 

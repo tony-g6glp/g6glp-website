@@ -17,6 +17,7 @@ $stmt = $pdo->prepare("
     ON blog_posts.category_id = categories.id
     WHERE blog_posts.slug = ?
 	AND blog_posts.status = 'published'
+	AND archived = 0
     LIMIT 1
 ");
 

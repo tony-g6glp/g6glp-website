@@ -50,6 +50,7 @@ if (!empty($tags)) {
 
 $sql .= "
     WHERE blog_posts.status = 'published'
+	AND blog_posts.archived = 0
 ";
 
 

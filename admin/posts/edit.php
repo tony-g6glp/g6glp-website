@@ -49,7 +49,7 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 verify_csrf();
-	
+	$archived = isset($_POST['archived']) ? 1 : 0;
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
     $status = $_POST['status'] ?? 'draft';
@@ -113,7 +113,8 @@ verify_csrf();
                 content = ?,
                 status = ?,
                 category_id = ?, 
-				featured_image = ?
+				featured_image = ?,
+				archived = ?
             WHERE id = ?
         ");
 
@@ -124,6 +125,7 @@ verify_csrf();
             $status,
             $category_id,
 			$featured_image,
+			$archived,
             $id
         ]);
 

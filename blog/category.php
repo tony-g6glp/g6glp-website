@@ -32,6 +32,7 @@ $stmt = $pdo->prepare("
     ON blog_posts.category_id = categories.id
     WHERE categories.slug = ?
     AND blog_posts.status='published'
+	AND archived = 0
     ORDER BY blog_posts.created_at DESC
 ");
 

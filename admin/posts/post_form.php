@@ -8,7 +8,9 @@
            value="<?= e($post['title'] ?? '') ?>"
            required>
 
-
+	<input type="checkbox" name="archived" value="1"
+    <?= isset($post['archived']) && $post['archived'] ? 'checked' : '' ?>>
+Archived
     <p>Content</p>
 
     <textarea name="content"

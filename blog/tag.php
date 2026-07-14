@@ -36,6 +36,7 @@ $stmt = $pdo->prepare("
     ON post_tags.tag_id = tags.id
     WHERE tags.slug = ?
     AND blog_posts.status = 'published'
+	AND archived = 0
     ORDER BY blog_posts.created_at DESC
 ");
 
