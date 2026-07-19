@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +46,7 @@ Operating as G6GLP, contesting, digital modes,
 portable operation, antennas and station building.
 </p>
 
-<a href="radio/">Visit</a>
+<a href="amateur_radio/">Visit</a>
 </div>
 
 <div class="card">
@@ -53,7 +56,7 @@ PHP, MySQL, Linux, Raspberry Pi,
 automation tools and web applications.
 </p>
 
-<a href="software/">Visit</a>
+<a href="include/under_construction.php/">Visit</a>
 </div>
 
 <div class="card">
@@ -63,7 +66,7 @@ Homebrew equipment, Arduino, ESP32,
 test equipment and RF projects.
 </p>
 
-<a href="electronics/">Visit</a>
+<a href="include/under_construction.php/">Visit</a>
 </div>
 
 <div class="card">
@@ -73,7 +76,7 @@ Selected photographs from travels,
 events and portable radio locations.
 </p>
 
-<a href="photos/">Visit</a>
+<a href="include/under_construction.php/">Visit</a>
 </div>
 
 <div class="card">
@@ -93,7 +96,7 @@ Software, documents,
 construction notes and useful utilities.
 </p>
 
-<a href="downloads/">Visit</a>
+<a href="include/under_construction.php/">Visit</a>
 </div>
 
 <div class="card">

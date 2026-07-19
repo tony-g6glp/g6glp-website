@@ -22,7 +22,18 @@ function permissions()
             'delete_media',
 
             'manage_categories',
-            'manage_tags'
+            'manage_tags',
+
+            'create_downloads',
+            'edit_downloads',
+            'delete_downloads',
+            'manage_downloads',
+			
+			'manage_pages',
+			'create_pages',
+			'edit_pages',
+			'edit_own_pages',
+			'delete_pages'
 
         ],
 
@@ -35,17 +46,29 @@ function permissions()
             'publish_posts',
 
             'create_media',
-            'delete_media'
+            'delete_media',
+
+            'create_downloads',
+            'edit_downloads',
+            'delete_downloads',
+			
+			'create_pages',
+			'edit_pages',
+			'edit_own_pages',
+			'delete_pages'
 
         ],
 
 
         'author' => [
-
-            'create_posts',
-            'edit_own_posts'
-
-        ]
+		
+			'create_posts',
+			'edit_own_posts',
+		
+			'create_downloads',
+			'edit_own_downloads'
+		
+		],
 
     ];
 }

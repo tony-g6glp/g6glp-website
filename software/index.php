@@ -75,18 +75,6 @@ database classes and administration utilities.
 
 </div>
 
-<div class="card">
-
-<h3>Weather Station</h3>
-
-<p>
-Collecting and displaying weather data from local sensors
-using Raspberry Pi and PHP.
-</p>
-
-<a href="weather/">Open Project</a>
-
-</div>
 
 <div class="card">
 

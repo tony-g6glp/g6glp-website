@@ -12,12 +12,33 @@
 <a href="/g6glp/admin/posts/new.php">New Post</a>
 <?php endif; ?>
 
+<?php if (can('manage_pages') || can('create_pages')): ?>
+
+<a href="/g6glp/admin/pages/">
+Pages
+</a>
+<?php endif; ?>
+
 <?php if (can('manage_categories')): ?>
 <a href="/g6glp/admin/categories/">Categories</a>
 <?php endif; ?>
 
 <?php if (can('manage_tags')): ?>
 <a href="/g6glp/admin/tags/">Tags</a>
+<?php endif; ?>
+
+<?php if (can('manage_downloads')): ?>
+<a href="/g6glp/admin/download_categories/">
+Download Categories
+</a>
+
+<?php endif; ?>
+<?php if (can('manage_downloads') || can('create_downloads')): ?>
+
+<a href="/g6glp/admin/downloads/">
+Downloads
+</a>
+
 <?php endif; ?>
 
 <?php if (
