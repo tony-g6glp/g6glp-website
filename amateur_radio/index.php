@@ -103,14 +103,13 @@ remote access and data logging projects.
 
 <div class="card">
 
-<h3>Arduino & ESP32</h3>
+<h3>ADIF <> CABRILLO Converter</h3>
 
 <p>
-Microcontroller projects supporting amateur radio,
-home automation and electronic experimentation.
+Allows user to upload an ADIF file and get it converted to one of many contest Cabrillo formats.
 </p>
 
-<a href="arduino/">Open Project</a>
+<a href="adif_converter/">Open Project</a>
 
 </div>
 

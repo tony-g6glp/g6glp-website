@@ -33,7 +33,8 @@ function permissions()
 			'create_pages',
 			'edit_pages',
 			'edit_own_pages',
-			'delete_pages'
+			'delete_pages',
+			'use_adif_converter'
 
         ],
 
@@ -55,7 +56,8 @@ function permissions()
 			'create_pages',
 			'edit_pages',
 			'edit_own_pages',
-			'delete_pages'
+			'delete_pages',
+			'use_adif_converter'
 
         ],
 
@@ -66,8 +68,13 @@ function permissions()
 			'edit_own_posts',
 		
 			'create_downloads',
-			'edit_own_downloads'
+			'edit_own_downloads',
+			'use_adif_converter'
 		
+		],
+		
+		'guest' => [
+			'use_adif_converter'
 		],
 
     ];

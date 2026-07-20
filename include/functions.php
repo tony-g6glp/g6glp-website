@@ -317,17 +317,20 @@ function csrf_field()
 }
 
 
+
 function verify_csrf()
 {
     if (
-        !isset($_POST['csrf_token']) ||
+        empty($_SESSION['csrf_token']) ||
+        empty($_POST['csrf_token']) ||
         !hash_equals(
             $_SESSION['csrf_token'],
             $_POST['csrf_token']
         )
     ) {
 
-        die('Invalid CSRF token');
+        http_response_code(403);
+        exit('Invalid CSRF token');
 
     }
 }
