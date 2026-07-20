@@ -77,19 +77,22 @@ class RsgbData extends AbstractContest
     }
 
 
-    public function buildQso(array $qso)
-    {
+	public function buildQso(array $qso, array $station)
+		{
 
         return sprintf(
-            "QSO: %-5s %-3s %s %s %-12s %s %s\n",
-            $qso['CABRILLO_BAND'] ?? '',
-            $qso['CABRILLO_MODE'] ?? '',
-            $qso['QSO_DATE'],
-            $qso['TIME_ON'],
-            $qso['CALL'],
-            $qso['STX'] ?? '',
-            $qso['SRX'] ?? $qso['SRX_STRING'] ?? ''
-        );
+        "QSO: %-5s %-3s %s %s %-12s %s %-6s %-12s %s %-6s\n",
+        $qso['CABRILLO_BAND'] ?? '',
+        $qso['CABRILLO_MODE'] ?? '',
+        $qso['QSO_DATE'],
+        $qso['TIME_ON'],
+        $station['callsign'],
+        $qso['RST_SENT'] ?? '599',
+        $qso['STX'] ?? '',
+        $qso['CALL'],
+        $qso['RST_RCVD'] ?? '599',
+        $qso['SRX'] ?? $qso['SRX_STRING'] ?? ''
+    );
 
     }
 

@@ -62,9 +62,12 @@ $job->saveStation(
 );
 
 $contest = ContestFactory::create($job->get('contest'));
-/*
-    Read ADIF
-*/
+
+$station = [
+    'callsign' => $callsign,
+    'operator' => $operator,
+    'power' => $power
+];
 
 $file = __DIR__ . '/uploads/' . $job->get('stored_filename');
 
@@ -76,8 +79,8 @@ $normalizer = new QsoNormalizer();
 
 foreach ($qsos as &$qso) {
 
-    $qso = $normalizer->normalise($qso);
-
+	$qso = $normalizer->normalise($qso);
+    
 }
 
 unset($qso);
@@ -86,6 +89,12 @@ unset($qso);
 $contest = ContestFactory::create(
     $job->get('contest')
 );
+
+$station = [
+    'callsign' => $callsign,
+    'operator' => $operator,
+    'power' => $power
+];
 
 $errors = $contest->validate($qsos);
 
@@ -121,17 +130,12 @@ exit;
 
 }
 
-$station = [
-    'callsign' => $callsign,
-    'operator' => $operator,
-    'power' => $power
-];
 
 $cabrillo = $contest->buildHeader($station);
 
 foreach ($qsos as $qso) {
 
-    $cabrillo .= $contest->buildQso($qso);
+    $cabrillo .= $contest->buildQso($qso, $station);
 
 }
 /*

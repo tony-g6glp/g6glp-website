@@ -85,9 +85,9 @@ class QsoNormalizer
 	
 			'RTTY'      => 'RY',
 	
-			'PSK'       => 'DG',
+			'PSK'       => 'PS',
 			'PSK31'     => 'DG',
-			'PSK63'     => 'DG',
+			'PSK63'     => 'PS',
 	
 			'DIGITAL'   => 'DG',
 	
