@@ -10,6 +10,8 @@ require_once __DIR__ . '/classes/Job.php';
 
 require_once __DIR__ . '/classes/Contest/ContestFactory.php';
 
+require_once __DIR__ . '/classes/Contest/ContestFactory.php';
+
 /*
 if (!can('use_adif_converter')) {
 
@@ -83,7 +85,7 @@ unset($qso);
 /*
     Create Cabrillo text
 */
-
+/*
 $cabrillo = "";
 
 
@@ -135,8 +137,24 @@ foreach ($qsos as $qso) {
 
 
 $cabrillo .= "END-OF-LOG:\n";
+*/
 
+$contest = ContestFactory::create(
+    $job->get('contest')
+);
+$station = [
+    'callsign' => $callsign,
+    'operator' => $operator,
+    'power' => $power
+];
 
+$cabrillo = $contest->buildHeader($station);
+
+foreach ($qsos as $qso) {
+
+    $cabrillo .= $contest->buildQso($qso);
+
+}
 /*
     Send download
 */
