@@ -16,6 +16,8 @@ abstract class AbstractContest
 
 
     abstract public function buildHeader(array $station);
+	
+	abstract public function getStationFields();
 
 
 }

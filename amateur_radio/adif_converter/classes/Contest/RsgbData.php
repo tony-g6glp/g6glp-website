@@ -92,8 +92,23 @@ class RsgbData extends AbstractContest
         $qso['CALL'],
         $qso['RST_RCVD'] ?? '599',
         $qso['SRX'] ?? $qso['SRX_STRING'] ?? ''
-    );
+    	);
 
     }
+	
+	public function getStationFields()
+{
+    return [
+        'location',
+        'category_operator',
+        'category_assisted',
+        'category_band',
+        'category_power',
+        'category_mode',
+        'category_transmitter',
+        'category_overlay',
+        'grid_locator'
+    	];
+	}
 
 }
