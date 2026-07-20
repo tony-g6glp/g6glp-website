@@ -71,8 +71,17 @@ class RsgbData extends AbstractContest
             "START-OF-LOG: 3.0\n" .
             "CONTEST: RSGB-DATA\n" .
             "CALLSIGN: " . $station['callsign'] . "\n" .
-            "CATEGORY-POWER: " . $station['power'] . "\n" .
-			"NAME: " . ($station['operator'] ?? '') . "\n\n";
+            "CATEGORY-POWER: " . ($station['category_power'] ?? '') . "\n" .
+			"NAME: " . ($station['operator'] ?? '') . "\n" .
+			"LOCATION: " . ($station['location'] ?? '') . "\n" .
+			"CATEGORY-OPERATOR: " . ($station['category_operator'] ?? '') . "\n" .
+			"CATEGORY-ASSISTED: " . ($station['category_assisted'] ?? '') . "\n" .
+			"CATEGORY-BAND: " . ($station['category_band'] ?? '') . "\n" .
+			"CATEGORY-POWER: " . ($station['category_power'] ?? '') . "\n" .
+			"CATEGORY-MODE: " . ($station['category_mode'] ?? '') . "\n" .
+			"CATEGORY-TRANSMITTER: " . ($station['category_transmitter'] ?? '') . "\n" .
+			"CATEGORY-OVERLAY: " . ($station['category_overlay'] ?? '') . "\n" .
+			"GRID-LOCATOR: " . ($station['grid_locator'] ?? '') . "\n\n";
 
     }
 
@@ -97,18 +106,82 @@ class RsgbData extends AbstractContest
     }
 	
 	public function getStationFields()
-{
-    return [
-        'location',
-        'category_operator',
-        'category_assisted',
-        'category_band',
-        'category_power',
-        'category_mode',
-        'category_transmitter',
-        'category_overlay',
-        'grid_locator'
-    	];
-	}
+		{
+    	return [
+
+			'operator' => [
+				'type' => 'text'
+			],
+	
+			'location' => [
+				'type' => 'text'
+			],
+	
+			'category_operator' => [
+				'type' => 'select',
+				'options' => [
+					'SINGLE-OP',
+					'MULTI-OP'
+				]
+			],
+	
+			'category_assisted' => [
+				'type' => 'select',
+				'options' => [
+					'ASSISTED',
+					'NON-ASSISTED'
+				]
+			],
+	
+			'category_band' => [
+				'type' => 'select',
+				'options' => [
+					'ALL',
+					'160M',
+					'80M',
+					'40M',
+					'20M',
+					'15M',
+					'10M'
+				]
+			],
+	
+			'category_power' => [
+				'type' => 'select',
+				'options' => [
+					'HIGH',
+					'LOW',
+					'QRP'
+				]
+			],
+	
+			'category_mode' => [
+				'type' => 'select',
+				'options' => [
+					'SSB',
+					'CW',
+					'DIGITAL'
+				]
+			],
+	
+			'category_transmitter' => [
+				'type' => 'select',
+				'options' => [
+					'ONE',
+					'TWO',
+					'UNLIMITED'
+				]
+			],
+	
+			'category_overlay' => [
+				'type' => 'text'
+			],
+	
+			'grid_locator' => [
+				'type' => 'text'
+			]
+	
+		];
+}
 
 }

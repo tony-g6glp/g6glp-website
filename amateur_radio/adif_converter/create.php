@@ -91,10 +91,14 @@ $contest = ContestFactory::create(
 );
 
 $station = [
-    'callsign' => $callsign,
-    'operator' => $operator,
-    'power' => $power
+    'callsign' => $callsign
 ];
+
+foreach ($contest->getStationFields() as $field => $definition) {
+
+    $station[$field] = $_POST[$field] ?? '';
+
+}
 
 $errors = $contest->validate($qsos);
 

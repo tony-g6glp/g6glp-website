@@ -23,10 +23,12 @@ if (!$token || !$contest) {
 
 }
 
-if ($contest !== 'rsgb-data') {
+require_once __DIR__ . '/classes/Contest/ContestFactory.php';
 
-    die('Invalid contest');
-}
+$contestObject = ContestFactory::create($contest);
+
+$stationFields = $contestObject->getStationFields();
+
 
 require_once __DIR__ . '/classes/Job.php';
 
@@ -79,7 +81,9 @@ Contest selected:
 <input type="hidden" 
        name="token"
        value="<?= htmlspecialchars($token) ?>">
-
+<input type="hidden"
+       name="contest"
+       value="<?= htmlspecialchars($contest) ?>">
 <?= csrf_field() ?>
 <label>
 Callsign
@@ -94,41 +98,38 @@ Callsign
 
 <br><br>
 
+<?php foreach ($stationFields as $field => $definition): ?>
 
 <label>
-Operator
+<?= htmlspecialchars(strtoupper(str_replace('_', ' ', $field))) ?>
 </label>
 
 <br>
 
-<input type="text"
-       name="operator">
+<?php if ($definition['type'] === 'select'): ?>
 
+<select name="<?= htmlspecialchars($field) ?>">
+
+<?php foreach ($definition['options'] as $option): ?>
+
+<option value="<?= htmlspecialchars($option) ?>">
+<?= htmlspecialchars($option) ?>
+</option>
+
+<?php endforeach; ?>
+
+</select>
+
+<?php else: ?>
+
+<input type="text"
+       name="<?= htmlspecialchars($field) ?>">
+
+<?php endif; ?>
 
 <br><br>
 
-
-<label>
-Power
-</label>
-
-<br>
-
-<select name="power">
-
-<option value="LOW">
-Low
-</option>
-
-<option value="HIGH">
-High
-</option>
-
-<option value="QRP">
-QRP
-</option>
-
-</select>
+<?php endforeach; ?>
 
 
 <br><br>
