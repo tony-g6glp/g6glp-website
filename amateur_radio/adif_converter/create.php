@@ -82,66 +82,45 @@ foreach ($qsos as &$qso) {
 
 unset($qso);
 
-/*
-    Create Cabrillo text
-*/
-/*
-$cabrillo = "";
-
-
-$cabrillo .= "START-OF-LOG: 3.0\n";
-$cabrillo .= "CALLSIGN: " . $callsign . "\n";
-$cabrillo .= "CONTEST: " . strtoupper($job->get('contest')) . "\n";
-$cabrillo .= "CATEGORY-POWER: " . $power . "\n";
-
-
-if ($operator) {
-
-    $cabrillo .= "NAME: " . $operator . "\n";
-
-}
-
-
-$cabrillo .= "\n";
-
-
-foreach ($qsos as $qso) {
-
-
-    $date = $qso['QSO_DATE'] ?? '';
-
-    $time = $qso['TIME_ON'] ?? '';
-
-    $band = $qso['CABRILLO_BAND'] ?? '';
-	$mode = $qso['CABRILLO_MODE'] ?? '';
-
-    $call = strtoupper($qso['CALL'] ?? '');
-
-    $sent = $qso['RST_SENT'] ?? '';
-
-    $recv = $qso['RST_RCVD'] ?? '';
-
-
-    $cabrillo .= sprintf(
-        "QSO: %-5s %-3s %s %s %-12s %s %s\n",
-        $band,
-        $mode,
-        $date,
-        $time,
-        $call,
-        $sent,
-        $recv
-    );
-
-}
-
-
-$cabrillo .= "END-OF-LOG:\n";
-*/
 
 $contest = ContestFactory::create(
     $job->get('contest')
 );
+
+$errors = $contest->validate($qsos);
+
+if (!empty($errors)) {
+
+   echo '<div class="container">';
+
+	echo '<h1>Cabrillo Generation Failed</h1>';
+	
+	echo '<p>';
+	echo 'The following problems were found in your ADIF file:';
+	echo '</p>';
+	
+	echo '<ul>';
+	
+	foreach ($errors as $error) {
+	
+		echo '<li>';
+		echo htmlspecialchars($error);
+		echo '</li>';
+	
+	}
+	
+	echo '</ul>';
+	
+	echo '<p>';
+	echo 'Please correct the ADIF file and upload it again.';
+	echo '</p>';
+	
+	echo '</div>';
+
+exit;
+
+}
+
 $station = [
     'callsign' => $callsign,
     'operator' => $operator,
