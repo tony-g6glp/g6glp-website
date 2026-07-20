@@ -71,7 +71,6 @@ class RsgbData extends AbstractContest
             "START-OF-LOG: 3.0\n" .
             "CONTEST: RSGB-DATA\n" .
             "CALLSIGN: " . $station['callsign'] . "\n" .
-            "CATEGORY-POWER: " . ($station['category_power'] ?? '') . "\n" .
 			"NAME: " . ($station['operator'] ?? '') . "\n" .
 			"LOCATION: " . ($station['location'] ?? '') . "\n" .
 			"CATEGORY-OPERATOR: " . ($station['category_operator'] ?? '') . "\n" .

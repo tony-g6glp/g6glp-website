@@ -53,21 +53,26 @@ try {
 
 }
 
+$contest = ContestFactory::create(
+    $job->get('contest')
+);
+
+$station = [
+    'callsign' => $callsign
+];
+
+foreach ($contest->getStationFields() as $field => $definition) {
+
+    $station[$field] = $_POST[$field] ?? '';
+
+}
 
 $job->saveStation(
     $pdo,
-    $callsign,
-    $operator,
-    $power
+    $station
 );
 
-$contest = ContestFactory::create($job->get('contest'));
 
-$station = [
-    'callsign' => $callsign,
-    'operator' => $operator,
-    'power' => $power
-];
 
 $file = __DIR__ . '/uploads/' . $job->get('stored_filename');
 
@@ -86,19 +91,9 @@ foreach ($qsos as &$qso) {
 unset($qso);
 
 
-$contest = ContestFactory::create(
-    $job->get('contest')
-);
 
-$station = [
-    'callsign' => $callsign
-];
 
-foreach ($contest->getStationFields() as $field => $definition) {
 
-    $station[$field] = $_POST[$field] ?? '';
-
-}
 
 $errors = $contest->validate($qsos);
 

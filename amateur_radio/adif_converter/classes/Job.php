@@ -48,29 +48,50 @@ class Job
 
 	public function saveStation(
 			PDO $pdo,
-			string $callsign,
-			string $operator,
-			string $power
+			array $station
 		)
 		{
+			$stationJson = json_encode($station);
+		
 			$stmt = $pdo->prepare("
-				UPDATE adif_jobs
-				SET callsign = ?,
-					operator = ?,
-					power = ?
+			UPDATE adif_jobs
+			SET callsign = ?,
+				operator = ?,
+				power = ?,
+				location = ?,
+				category_operator = ?,
+				category_assisted = ?,
+				category_band = ?,
+				category_power = ?,
+				category_mode = ?,
+				category_transmitter = ?,
+				category_overlay = ?,
+				grid_locator = ?,
+				station_json = ?
 				WHERE token = ?
 			");
 		
 			$stmt->execute([
-				$callsign,
-				$operator,
-				$power,
+				$station['callsign'] ?? '',
+				$station['operator'] ?? '',
+				$station['category_power'] ?? '',
+				$station['location'] ?? '',
+				$station['category_operator'] ?? '',
+				$station['category_assisted'] ?? '',
+				$station['category_band'] ?? '',
+				$station['category_power'] ?? '',
+				$station['category_mode'] ?? '',
+				$station['category_transmitter'] ?? '',
+				$station['category_overlay'] ?? '',
+				$station['grid_locator'] ?? '',
+				json_encode($station),
 				$this->data['token']
 			]);
 		
-			$this->data['callsign'] = $callsign;
-			$this->data['operator'] = $operator;
-			$this->data['power'] = $power;
-	}
+			$this->data['callsign'] = $station['callsign'] ?? '';
+			$this->data['operator'] = $station['operator'] ?? '';
+			$this->data['power'] = $station['category_power'] ?? '';
+			$this->data['station_json'] = $stationJson;
+		}
 
 }
