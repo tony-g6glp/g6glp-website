@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/RsgbData.php';
-
+require_once __DIR__ . '/Rsgb80mClub.php';
 
 class ContestFactory
 {
@@ -15,6 +15,10 @@ class ContestFactory
             case 'rsgb-data':
 
                 return new RsgbData();
+				
+			case 'rsgb-80m-club':
+    		
+				return new Rsgb80mClub();
 
 
             default:
