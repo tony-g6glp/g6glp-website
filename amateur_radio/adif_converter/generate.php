@@ -25,7 +25,10 @@ if (!$token || !$contest) {
 
 require_once __DIR__ . '/classes/Contest/ContestFactory.php';
 
-$contestObject = ContestFactory::create($contest);
+$contestObject = ContestFactory::create(
+    $pdo,
+    $contest
+);
 
 $stationFields = $contestObject->getStationFields();
 

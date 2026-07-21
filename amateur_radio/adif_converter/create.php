@@ -54,6 +54,7 @@ try {
 }
 
 $contest = ContestFactory::create(
+    $pdo,
     $job->get('contest')
 );
 
