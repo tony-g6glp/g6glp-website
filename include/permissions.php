@@ -34,6 +34,7 @@ function permissions()
 			'edit_pages',
 			'edit_own_pages',
 			'delete_pages',
+			'manage_contests',
 			'use_adif_converter'
 
         ],
