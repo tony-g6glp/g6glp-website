@@ -71,9 +71,6 @@ $job->saveStation(
     $pdo,
     $station
 );
-
-
-
 $file = __DIR__ . '/uploads/' . $job->get('stored_filename');
 
 $parser = new AdifParser();
