@@ -198,6 +198,7 @@ class DatabaseContest extends AbstractContest
         } else {
 
             $value = $qso[$source] ?? '';
+			
 
         }
 
@@ -240,7 +241,7 @@ class DatabaseContest extends AbstractContest
     }
 
 
-    return "QSO: " . implode('', $parts) . "\n";
+    return "QSO: " . implode(' ', array_map('trim', $parts)) . "\n";
 
 	}
 	

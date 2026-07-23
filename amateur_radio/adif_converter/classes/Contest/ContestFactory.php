@@ -16,21 +16,21 @@ class ContestFactory
             First try database contests
         */
 
-        $stmt = $pdo->prepare("
-            SELECT id
-            FROM contests
-            WHERE contest_id = ?
-            AND active = 1
-            LIMIT 1
-        ");
-
-        $stmt->execute([
-            $id
-        ]);
+				$stmt = $pdo->prepare("
+			SELECT id
+			FROM contests
+			WHERE contest_id = ?
+			AND active = ?
+			LIMIT 1
+		");
+		
+		$stmt->execute([
+			$id,
+			1
+		]);
 
 
         $contest = $stmt->fetch(PDO::FETCH_ASSOC);
-
 
         if ($contest) {
 

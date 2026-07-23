@@ -248,7 +248,20 @@ of <?= count($qsos) ?> total.
 <?= htmlspecialchars(print_r(array_keys($qsos[0] ?? []), true)) ?>
 </pre>
 <h2>Create Cabrillo Log</h2>
-<?php $contests = ContestRegistry::all(); ?>
+<?php
+
+$stmt = $pdo->prepare("
+    SELECT id, contest_id, name
+    FROM contests
+    WHERE active = 1
+    ORDER BY name
+");
+
+$stmt->execute();
+
+$contests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <form method="post" action="generate.php">
 
     <input type="hidden" name="token"
@@ -259,17 +272,19 @@ of <?= count($qsos) ?> total.
         Select Contest:
     </label>
 
-    <br>
-
-    <select name="contest" id="contest">
+    <br>  
 	
-		<?php foreach ($contests as $contest): ?>
-		<option value="<?= htmlspecialchars($contest->getId()) ?>">
-		<?= htmlspecialchars($contest->getName()) ?>
-		</option>
+   <select name="contest" id="contest">
+
+<?php foreach ($contests as $contest): ?>
+
+<option value="<?= e($contest['contest_id']) ?>">
+    <?= e($contest['name']) ?>
+</option>
 
 <?php endforeach; ?>
-    </select>
+
+</select>
 
     <br><br>
 

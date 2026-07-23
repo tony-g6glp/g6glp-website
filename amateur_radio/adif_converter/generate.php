@@ -14,10 +14,9 @@ if (!can('use_adif_converter')) {
 */
 
 $token = $_POST['token'] ?? '';
-$contest = $_POST['contest'] ?? '';
-
-
-if (!$token || !$contest) {
+// $contest_id = $_POST['contest'] ?? '';
+$contest_id = trim($_POST['contest'] ?? '');
+if (!$token || !$contest_id) {
 
     die('Missing information');
 
@@ -27,7 +26,7 @@ require_once __DIR__ . '/classes/Contest/ContestFactory.php';
 
 $contestObject = ContestFactory::create(
     $pdo,
-    $contest
+    $contest_id
 );
 
 $stationFields = $contestObject->getStationFields();
@@ -45,7 +44,8 @@ try {
 
 }
 
-$job->saveContest($pdo, $contest);
+$job->saveContest($pdo, $contest_id);
+
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +73,7 @@ $job->saveContest($pdo, $contest);
 <p>
 Contest selected:
 <strong>
-<?= htmlspecialchars($contest) ?>
+<?= htmlspecialchars($contest_id) ?>
 </strong>
 </p>
 
@@ -88,17 +88,6 @@ Contest selected:
        name="contest"
        value="<?= htmlspecialchars($contest) ?>">
 <?= csrf_field() ?>
-<label>
-Callsign
-</label>
-
-<br>
-
-<input type="text"
-       name="callsign"
-       required>
-
-
 <br><br>
 
 <?php foreach ($stationFields as $field => $definition): ?>

@@ -9,6 +9,9 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+$pdo->beginTransaction();
+
+try {
     $contest_id = trim($_POST['contest_id']);
     $name = trim($_POST['name']);
     $cabrillo_name = trim($_POST['cabrillo_name']);
@@ -45,13 +48,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         $id = $pdo->lastInsertId();
+		
 
 
+// Add mandatory header field
+
+$stmt = $pdo->prepare("
+    INSERT INTO contest_headers
+    (
+        contest_id,
+        header_name,
+        source_field,
+        sort_order
+    )
+    VALUES
+    (?, ?, ?, ?)
+");
+
+$stmt->execute([
+    $new_contest_id,
+    'CALL',
+    'callsign',
+    1
+]);
+
+$new_header_id = $pdo->lastInsertId();
+
+// Add mandatory Station field
+
+$stmt = $pdo->prepare("
+    INSERT INTO contest_fields
+    (
+        contest_id,
+        field_name,
+        label,
+		field_type,
+		required,
+		sort_order
+    )
+    VALUES
+    (?, ?, ?, ?, ?, ?)
+");
+
+$stmt->execute([
+    $new_contest_id,
+    'callsign',
+	'CALLSIGN',    
+	'text',
+	1,
+	1
+]);
+
+$new_Field_id = $pdo->lastInsertId();
+
+$pdo->commit();
+
+	} catch (Exception $e) {
+
+    $pdo->rollBack();
+    throw $e;
+
+}
         header(
             "Location: headers.php?id=" . $id
         );
 
-        exit;
+
 
 
     } catch (PDOException $e) {

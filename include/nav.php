@@ -41,6 +41,13 @@ Downloads
 
 <?php endif; ?>
 
+<?php if (can('manage_contests')): ?>
+
+<a href="/g6glp/admin/contests/">
+Contests
+</a>
+
+<?php endif; ?>
 <?php if (
     can('create_media') ||
     can('delete_media')

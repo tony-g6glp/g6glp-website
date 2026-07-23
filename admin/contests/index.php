@@ -25,7 +25,7 @@ $contests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include __DIR__ . '/../../include/nav.php'; ?>
 
 <div class="container">
-<h1>Contest Manager</h1>
+<h1>Contest Manager / Wizard</h1>
 
 <p>
     <a href="new.php">+ New Contest</a>
@@ -64,9 +64,17 @@ $contests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </td>
 
 <td>
+
     <a href="edit.php?id=<?= $contest['id'] ?>">
-        Edit
+        Edit Contest
     </a>
+
+    |
+
+    <a href="headers.php?id=<?= $contest['id'] ?>">
+        Open Wizard
+    </a>
+
 </td>
 
 </tr>
